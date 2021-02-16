@@ -45,4 +45,30 @@ class ContainerMngInterface:
                         except docker.errors.APIError:
                                 return False
                         return True
+                        #res is tuple(output,exit_code)                 
+        #def copydata(self,srcpath,dstcontainer,dstpath):
 
+        #internal method        
+
+        #initialze container status dictionary
+        def _make_container_dict(self):
+                for key in self._container_namelist:
+                        self._container_sts_dict[key] = "False"  # is it correct?
+
+        #status dictionary status reset
+        def _contain_sts_reset(self):
+                for key in self._container_sts_dict:
+                        self._container_sts_dict[key] = "False" #is it correct?
+
+        #update status 
+        def _get_contains(self,running_container):
+                for container in running_container:
+                        if container.name in self._container_sts_dict:
+                                self._container_sts_dict[container.name] = "True" #is it correct?       
+
+# main routine (for subprocess call). TODO.other public method implmentaions are remain.
+if __name__ == '__main__':
+        intf = ContainerMngInterface(None)
+        getlist = ["pedantic_panini","test_container_name"]
+        intf.set_container_list(getlist)
+        print(intf.get_status())
